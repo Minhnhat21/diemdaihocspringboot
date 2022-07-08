@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tra cứu kết quả nguyện vọng</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css" rel="stylesheet"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+    <link rel="stylesheet" th:href="@{/css/homepage.css}">
+    <script type="text/javascript" th:src="@{/js/homepagejs.js}"></script>
+
+
+</head>
+<body>
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <h5 style="padding-left: 10px">Tra cứu nguyện vọng 1</h5>
+    </a>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user" style="padding: 10px"></span>Đăng nhập dành cho Admin</a></li>
+    </ul>
+</nav>
+
+<div class="row justify-content-center padding">
+    <h4>Tra cứu kết quả nguyện vọng 1 trường Đại học Khoa học, Đại học Huế</h4>
+    <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+        <form action="#" class="domain-form">
+            <div class="form-group d-md-flex">
+                <input id="content-search" type="text" class="form-control px-4" placeholder="Nhập căn cước công dân của bạn.">
+                <input onclick="searchStudentByName();" type="submit" class="search-domain btn btn-primary px-5" value="Tra cứu">
+            </div>
+        </form>
+        <span class="error" style="color: red; margin: 20px; font-size: 30px"></span>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Căn cước công dân</th>
+                <th scope="col">Họ và tên</th>
+                <th scope="col">Tổng điểm</th>
+                <th scope="col">Kết quả</th>
+            </tr>
+            </thead>
+            <tbody id="get-data">
+            </tbody>
+        </table>
+        <div id = "console-rank">
+            <h4 id="c-h2">Thứ hạng: </h4>
+            <button id="rank_button" onclick="getRank()" type="button" class="btn btn-primary btn-lg">Xem thứ hạng của mình</button>
+            <button id="btn-reload" type="button" class="btn btn-primary btn-sm">Reset</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
