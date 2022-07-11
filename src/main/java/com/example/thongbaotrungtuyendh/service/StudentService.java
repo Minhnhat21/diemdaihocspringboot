@@ -1,6 +1,7 @@
 package com.example.thongbaotrungtuyendh.service;
 
 import com.example.thongbaotrungtuyendh.entity.EExamSubject;
+import com.example.thongbaotrungtuyendh.entity.MajorsRegister;
 import com.example.thongbaotrungtuyendh.entity.Score;
 import com.example.thongbaotrungtuyendh.entity.Student;
 import com.example.thongbaotrungtuyendh.exception.StudentNotFoundException;
@@ -112,6 +113,8 @@ public class StudentService {
         studentUpdate.setDob(student.getDob());
         studentUpdate.setPriorityPoint(student.getPriorityPoint());
         studentUpdate.setEmail(student.getEmail());
+        studentUpdate.setAddress(student.getAddress());
+
         return studentRepository.save(studentUpdate);
     }
 
@@ -120,13 +123,28 @@ public class StudentService {
     public void deleteStudentByID(Integer id) {
         studentRepository.deleteById(id);
     }
-    //Search student by fullname and email
-    public List<Student> studentsSearchList(String keyword) throws StudentNotFoundException {
-        if(studentRepository.findStudentByFullNameAndEmail(keyword) != null) {
-            return studentRepository.findStudentByFullNameAndEmail(keyword);
-        } else
-            throw new StudentNotFoundException("Not found","Student not found", HttpStatus.NOT_FOUND);
+
+    //Search student by fullname and majors register
+    public PageInfo<Student> studentsSearchList(Integer page, Integer limit, String keyName, String keyMajors) {
+        Pageable pageable = AppUtils.buildPageRequest(page, limit);
+        Page<Student> studentPage;
+
+        if(keyMajors.length() == 0) {
+           studentPage = studentRepository.findStudentByFullName(pageable, keyName);
+        }
+        studentPage = studentRepository.findItems(pageable, keyName, keyMajors);
+
+        return AppUtils.buildPageResponse(studentPage);
     }
+
+    //Search student by majors register
+    public List<Student> studentsSearchListByMajorsName(String keyMajors) {
+       if(keyMajors.isEmpty()) {
+           return studentRepository.findAll();
+       }
+        return studentRepository.findStudentByMajorsRegister(keyMajors);
+    }
+
     //Search student by
     public Student studentResults(Long  citizenIdentity) throws StudentNotFoundException {
         if(studentRepository.findStudentByCitizenIdentity(citizenIdentity) != null) {
@@ -141,6 +159,8 @@ public class StudentService {
         int index = sortListStudent.indexOf(studentRepository.findStudentByCitizenIdentity(citizenIdentity));
         return index + 1;
     }
+
+
 
 
 

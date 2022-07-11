@@ -15,7 +15,7 @@ public class AppUtils {
             page = 0;
         }
         if(null == limit) {
-            limit = 10;
+            limit = 5;
         }
         return PageRequest.of(page, limit);
     }

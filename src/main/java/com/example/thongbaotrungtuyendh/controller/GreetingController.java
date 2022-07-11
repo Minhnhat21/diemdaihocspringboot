@@ -2,6 +2,7 @@ package com.example.thongbaotrungtuyendh.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class GreetingController {
@@ -15,7 +16,7 @@ public class GreetingController {
         return "homepage.html";
     }
 
-    @RequestMapping("/admin")
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage() {
         return "adminpage.html";
     }

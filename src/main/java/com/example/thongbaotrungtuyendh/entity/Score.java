@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "score")
@@ -25,5 +26,8 @@ public class Score extends BaseEntity{
     @JoinColumn(name = "exam_subject_id")
     private ExamSubject examSubject;
 
-
+    public Score(Float testScore, Student student) {
+        this.testScore = testScore;
+        this.student = student;
+    }
 }

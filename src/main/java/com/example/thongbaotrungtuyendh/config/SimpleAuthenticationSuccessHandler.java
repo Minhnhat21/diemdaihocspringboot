@@ -1,4 +1,4 @@
-package com.example.thongbaotrungtuyendh.exception;
+package com.example.thongbaotrungtuyendh.config;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -23,7 +23,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication authentication)
             throws IOException, ServletException {
 
-        Collectionextends GrantedAuthority> authorities = authentication.getAuthorities();
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();
         authorities.forEach(authority -> {
             if(authority.getAuthority().equals("ROLE_USER")) {
                 try {

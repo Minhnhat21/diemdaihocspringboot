@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -60,7 +61,15 @@ public class Student extends BaseEntity{
     @JsonIgnore
     private List<Score> scores;
 
-
+    public Student(Long citizenIdentity, String fullName, String email, LocalDate dob, boolean gender, String address, float priorityPoint) {
+        this.citizenIdentity = citizenIdentity;
+        this.fullName = fullName;
+        this.email = email;
+        this.dob = dob;
+        this.gender = gender;
+        this.address = address;
+        this.priorityPoint = priorityPoint;
+    }
 
     @Override
     public String toString() {

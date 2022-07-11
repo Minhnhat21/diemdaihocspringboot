@@ -1,7 +1,6 @@
 package com.example.thongbaotrungtuyendh.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "majors_register")
@@ -25,7 +24,4 @@ public class MajorsRegister extends BaseEntity{
         return majorsName;
     }
 
-    public void setMajorsName(String majorsName) {
-        this.majorsName = majorsName;
-    }
 }

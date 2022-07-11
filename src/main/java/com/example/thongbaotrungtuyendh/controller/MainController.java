@@ -40,7 +40,7 @@ public class MainController {
     }
 
 
-    @GetMapping()
+    @GetMapping("/q")
     public HttpEntity<PageInfo<Student>> getStudents(@ApiParam("Page") @RequestParam(value = "page", required = false) Integer page,
                                                      @ApiParam("Limit") @RequestParam(value = "limit", required = false) Integer limit) {
         return new HttpEntity<>(studentService.getStudents(page,limit));
@@ -85,8 +85,18 @@ public class MainController {
 
     //Search
     @GetMapping("/search")
-    public HttpEntity<List<Student>> searchResultsExam(@RequestParam(value = "key", required = false) String key) throws StudentNotFoundException {
-        return new HttpEntity<>(studentService.studentsSearchList(key));
+    public HttpEntity<PageInfo<Student>> searchResultsExam(@ApiParam("Page") @RequestParam(value = "page", required = false) Integer page,
+                                                       @ApiParam("Limit") @RequestParam(value = "limit", required = false) Integer limit,
+                                                        @RequestParam(value = "nameKey", required = false) String nameKey,
+                                                       @RequestParam(value = "majorKey", required = false) String majorKey) {
+        return new HttpEntity<>(studentService.studentsSearchList(page, limit,nameKey, majorKey));
     }
+
+    //Search
+    @GetMapping("/search/majors")
+    public HttpEntity<List<Student>> searchResultsMajors(@RequestParam(value = "majorKey", required = false) String majorKey) {
+        return new HttpEntity<>(studentService.studentsSearchListByMajorsName(majorKey));
+    }
+
 
 }

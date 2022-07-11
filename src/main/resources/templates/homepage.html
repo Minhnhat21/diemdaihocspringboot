@@ -12,7 +12,21 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+
+    <!-- Popper Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap 4 Framework -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
     <link rel="stylesheet" th:href="@{/css/homepage.css}">
+
+    <script th:src="@{/js/pagination.min.js}"></script>
+    <script th:src="@{js/jquery.twbsPagination.min.js}"></script>
+    <script th:src="@{/js/plugins/jquery.validate.js}"></script>
+
     <script type="text/javascript" th:src="@{/js/homepagejs.js}"></script>
 
 
@@ -24,17 +38,17 @@
         <h5 style="padding-left: 10px">Tra cứu nguyện vọng 1</h5>
     </a>
     <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user" style="padding: 10px"></span>Đăng nhập dành cho Admin</a></li>
+        <li><a href="/login"><span class="glyphicon glyphicon-user" style="padding: 10px"></span>Đăng nhập dành cho Admin</a></li>
     </ul>
 </nav>
 
 <div class="row justify-content-center padding">
     <h4>Tra cứu kết quả nguyện vọng 1 trường Đại học Khoa học, Đại học Huế</h4>
     <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
-        <form action="#" class="domain-form">
+        <form id="main-form" action="#" class="domain-form">
             <div class="form-group d-md-flex">
-                <input id="content-search" type="text" class="form-control px-4" placeholder="Nhập căn cước công dân của bạn.">
-                <input onclick="searchStudentByName();" type="submit" class="search-domain btn btn-primary px-5" value="Tra cứu">
+                <input id="content-search" type="text" class="form-control px-4" placeholder="Nhập căn cước công dân của bạn." name="CitizenIdentity">
+                <input onclick="searchStudentByName()" type="submit" class="search-domain btn btn-primary px-5" value="Tra cứu">
             </div>
         </form>
         <span class="error" style="color: red; margin: 20px; font-size: 30px"></span>
@@ -52,7 +66,6 @@
         </table>
         <div id = "console-rank">
             <h4 id="c-h2">Thứ hạng: </h4>
-            <button id="rank_button" onclick="getRank()" type="button" class="btn btn-primary btn-lg">Xem thứ hạng của mình</button>
             <button id="btn-reload" type="button" class="btn btn-primary btn-sm">Reset</button>
         </div>
     </div>
