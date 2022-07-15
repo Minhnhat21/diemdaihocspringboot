@@ -11,14 +11,9 @@ $(document).ready(function () {
     addStudent()
     validateForm()
     removeQueryUrl()
-    upLoadCSV()
     $("#upload_csv_form").click(function (event) {
-
-        //stop submit the form, we will post it manually.
         event.preventDefault();
-
         upLoadCSV();
-
     });
 });
 function removeQueryUrl() {
@@ -34,15 +29,15 @@ function validateForm() {
             "CitizenIdentity": {
                 required: true,
                 maxlength: 12,
-               /* remote: {
-                    type: 'POST',
-                    url: 'http://localhost:8080/api/diemthi/citizenId',
-                    data: JSON.stringify($('#CitizenIdentity').val()),
-                    success: function (response) {
-                        alert(response)
-                        return response
-                    }
-                },*/
+                /* remote: {
+                     type: 'POST',
+                     url: 'http://localhost:8080/api/diemthi/citizenId',
+                     data: JSON.stringify($('#CitizenIdentity').val()),
+                     success: function (response) {
+                         alert(response)
+                         return response
+                     }
+                 },*/
             },
             "fullName": {
                 required: true,
@@ -51,8 +46,8 @@ function validateForm() {
                 required: true
             },
             "email": {
-               required: true,
-               email: true
+                required: true,
+                email: true
             },
             "priorityPoint": {
                 required: true
@@ -108,7 +103,7 @@ function validateForm() {
 function getAll(page) {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/api/diemthi/q?page=' + page,
+        url: '/api/diemthi/q?page=' + page,
         dataType: 'json',
         success: function (respone) {
             console.log(respone)
@@ -124,7 +119,7 @@ function getAll(page) {
                 str += "<td>" + (item.pass == true ? "Đậu nguyện vọng 1" : "Không đậu")+ "</td>";
                 str += "<td><a onclick='editStudent(" + item.id + ")' href=\"#editStudentModal\" class=\"edit\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Edit\">&#xE254;</i></a></td>";
                 str += "<td><a onclick='deleteStudent(" + item.id + ")' class=\"delete\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Delete\">&#xE872;</i></a></td>";
-                str += "<td><a  href=\"#detailStudentModal\" class=\"details-button\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Detail\"></i>Chi tiết</a></td>";
+                str += "<td><a onclick='detailStudent(" + item.id +")' href=\"#detailStudentModal\" class=\"details-button\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Detail\"></i>Chi tiết</a></td>";
                 str += "</tr>";
             });
             $('#get-data').html(str);
@@ -144,7 +139,7 @@ function getAll(page) {
 function getStudentById(id) {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/api/diemthi/' + id,
+        url: '/api/diemthi/' + id,
         dataType: 'json',
         success: function (data) {
             console.log(data);
@@ -153,6 +148,7 @@ function getStudentById(id) {
             $('#email-detail').val(data.email);
             $('#address-detail').val(data.address);
             $('#gender-detail').val(data.gender);
+            console.log($('#gender-detail').val());
             $('#dob-detail').val(data.dob);
             $('#detailPriorityPoint').val(data.priorityPoint);
             $('#detailsMajors').val(data.majorsRegister.majorsName);
@@ -166,7 +162,7 @@ function getStudentById(id) {
 function getEditFormStudentById(id) {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/api/diemthi/' + id,
+        url: '/api/diemthi/' + id,
         dataType: 'json',
         success: function (data) {
             console.log(data);
@@ -187,7 +183,7 @@ function getEditFormStudentById(id) {
 }
 
 function addStudent() {
-    let myURL = 'http://localhost:8080/api/diemthi/register';
+    let myURL = '/api/diemthi/register';
     let student = {};
     $('#add-data-btn').on('click', function (e) {
         if($("#add-form").valid()) {
@@ -238,7 +234,7 @@ function editStudent(id) {
         let updateStudentJson = JSON.stringify(updateStudent);
         $.ajax({
             type: "PUT",
-            url: 'http://localhost:8080/api/diemthi/' + id,
+            url: '/api/diemthi/' + id,
             data: updateStudentJson,
             contentType: "application/json; charset=utf-8",
 
@@ -257,37 +253,12 @@ function editStudent(id) {
 //Detail
 function detailStudent(id) {
     getStudentById(id);
-    $('#save-btn').on('click', function (e) {
-        let updateStudent = {};
-        updateStudent.fullName = $('#editFullName').val();
-        updateStudent.email = $('#editEmail4').val();
-        updateStudent.address = $('#editAddress').val();
-        updateStudent.dob = $('#editDOB').val();
-        updateStudent.gender = $('#editGender').val();
-        updateStudent.priorityPoint = $('#editpriorityPoint').val();
-        let updateStudentJson = JSON.stringify(updateStudent);
-        $.ajax({
-            type: "PUT",
-            url: 'http://localhost:8080/api/diemthi/' + id,
-            data: updateStudentJson,
-            contentType: "application/json; charset=utf-8",
-
-            success: function () {
-                alert("Update Student Successfull");
-                //$('#name-search').val("");
-            },
-            error: function (error) {
-                alert(error);
-            }
-        })
-
-    });
 }
 //Delete
 function deleteStudent(id) {
     $.ajax({
         type: "DELETE",
-        url: 'http://localhost:8080/api/diemthi/' + id,
+        url: '/api/diemthi/' + id,
         success: function() {
             $('#row'+id).html("");
         },
@@ -300,7 +271,7 @@ function searchStudentByName(page) {
     $('#btn-search').on('click', function (e) {
         $.ajax({
             type: "GET",
-            url: 'http://localhost:8080/api/diemthi/search?page' + page
+            url: '/api/diemthi/search?page' + page
                 + '&nameKey=' + $('#search-content').val()
                 + '&majorKey='  + $('#filter').val() ,
             dataType: 'json',
@@ -317,7 +288,7 @@ function searchStudentByName(page) {
                     str += "<td>" + (item.pass == true ? "Đậu nguyện vọng 1" : "Không đậu")+ "</td>";
                     str += "<td><a onclick='editStudent(" + item.id + ")' href=\"#detailStudentModal\" class=\"edit\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Edit\">&#xE254;</i></a></td>";
                     str += "<td><a onclick='deleteStudent(" + item.id + ")' class=\"delete\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Delete\">&#xE872;</i></a></td>";
-                    str += "<td><a  href=\"#detailStudentModal\" class=\"edit\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Edit\"></i></a>Chi tiết</td>";
+                    str += "<td><a onclick='detailStudent(" + item.id +")' href=\"#detailStudentModal\" class=\"edit\" data-toggle=\"modal\"><i class=\"material-icons\" data-toggle=\"tooltip\" title=\"Edit\"></i></a>Chi tiết</td>";
                     str += "</tr>";
 
                 });
@@ -326,7 +297,7 @@ function searchStudentByName(page) {
                     totalPages: respone.pages,
                     visiblePages: respone.limit,
                     onPageClick: function (event, page) {
-                        getAll(page-1);
+                        // getAll(page-1);
                     }
                 });
             }
@@ -344,7 +315,7 @@ function upLoadCSV() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "http://localhost:8080/api/csv/upload",
+        url: "/api/csv/upload",
         data: formData,
         //http://api.jquery.com/jQuery.ajax/
         //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
